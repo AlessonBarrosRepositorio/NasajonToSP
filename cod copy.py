@@ -21,7 +21,9 @@ try:
                 funcionarios.append((codCondominio, data_de_pagamento, mes_referencia, cod_Funcionario, nome_funcionario, salario, tipo_Pagamento))
 
     for cod, dataPG, dataRef, codFun, nomeF, salario, tipo_Pagamento in funcionarios:
-        print(f"codFuncionario: {cod} | data_de_pagamento: {dataPG} | data_de_referencia: {dataRef} | cod_Funcionario: {codFun} | nome: {nomeF} | salario: {salario} | tipo_pagamento: {tipo_Pagamento}")
+        print(f"codCondominio: {cod} | data_de_pagamento: {dataPG} | data_de_referencia: {dataRef} | cod_Funcionario: {codFun} | nome: {nomeF} | salario: {salario} | tipo_pagamento: {tipo_Pagamento}")
 
 except FileNotFoundError:
     print("Arquivo não encontrado. Verifique o caminho e tente novamente.")
+
+#./exemplos/ADIANTAMENTO ABRIL 2025.txt
