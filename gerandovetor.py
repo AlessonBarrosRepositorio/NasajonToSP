@@ -40,7 +40,7 @@ def ler_dados_arquivo(caminho_arquivo):
 
 # Exemplo de uso:
 if __name__ == "__main__":
-    caminho = "./exemplos/ADIANTAMENTO ABRIL 2025 copy.txt"  # Nome do arquivo .txt
+    caminho = "./exemplos/ADIANTAMENTO ABRIL 2025.txt"  # Nome do arquivo .txt
     lista_funcionarios = ler_dados_arquivo(caminho)
 
     for f in lista_funcionarios:
