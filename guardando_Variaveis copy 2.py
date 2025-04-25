@@ -61,15 +61,14 @@ Funcionário CPF Banco Agência Valor Conta
 # Extrair os blocos
 blocos = re.findall(r'(Persona Sql .*?)(?:\n\d{1,3}(?:\.\d{3})*,\d{2})', texto, re.DOTALL)
 
-funcionarios = []
+funcionario_uni = []
 
 for bloco in blocos:
-
+    # Extrair código do condomínio
     match_cond = re.search(r'Empresa\s*:\s*(\d{4})', bloco)
     cod_condominio = match_cond.group(1) if match_cond else "0000"
 
-
-    # Extrair o nome do mês e o ano
+    # Extrair data de referência
     match_data = re.search(r'Relação de Salários Líquidos em (\w+) de (\d{4})', bloco)
     if match_data:
         nome_mes = match_data.group(1)
@@ -77,11 +76,18 @@ for bloco in blocos:
         numero_mes = MesesAno.get(nome_mes)
         if numero_mes:
             data_formatada = f"{numero_mes.zfill(2)}{ano}"
-            funcionarios.append({
-                "cod_condominio":cod_condominio,
-                "dataReferencia": data_formatada
+
+            # Procurar todos os códigos de funcionários no bloco
+            codigos_func = re.findall(r'(\d{6})\s+-', bloco)
+            nomes_func = re.findall(r'\d{6}\s+-\s+([A-Z\sÇÃÕÉÁÍÚÊÂÔ]+)\s+\d{3}\.\d{3}\.\d{3}-\d{2}', bloco)
+            for cod, nome_func in zip(codigos_func, nomes_func):
+                funcionario_uni.append({
+                    "cod_condominio": cod_condominio,
+                    "dataReferencia": data_formatada,
+                    "cod_funcionario": cod,
+                    "nome_funcionario": nome_func.strip()
                 })
 
-# Imprimir o resultado
-for funcionario in funcionarios:
-    print(f"{funcionario['cod_condominio']}{funcionario["dataReferencia"]}")
+# Imprimir resultado
+for f in funcionario_uni:
+    print(f"{f['cod_condominio']}{f['dataReferencia']}{f['cod_funcionario']}{f['nome_funcionario']}")
