@@ -15,7 +15,7 @@ def exportar_blocos_para_txt(blocos, caminho_arquivo):
         print(f'❌ Erro ao exportar: {e}')
 
 # Leitura do texto original
-with open('resultado.txt', 'r', encoding='utf-8') as file:
+with open('resultado2.txt', 'r', encoding='utf-8') as file:
     texto = file.read()
 
 # Separa os blocos

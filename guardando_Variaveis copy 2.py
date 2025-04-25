@@ -57,6 +57,19 @@ Funcionário CPF Banco Agência Valor Conta
 5.612,58
 
 --------------------------------------------------------------------------------
+
+Persona Sql INDIK ASSESSORIA IMOBILIARIA LTDA Nasajon Sistemas
+CNPJ : 03.875.685/0001-08 Empresa : 0182COND EDIFICIO URARY
+Relação de Salários Líquidos em Março de 2025Página 1 de 2
+(Folha)
+Conta Salário
+Funcionário CPF Banco Agência Valor Conta
+000003 - LUIZ CARLOS PEREIRA DA COSTA 821.445.407-72 237 0135 - 0 1.371,66 15892 - 5
+000010 - IVONALDO SOARES DO NASCIMENTO 933.403.384-34 237 0135 - 0 737,32 26731 - 7
+000012 - JAIRO DA CONCEIÇÃO 073.452.844-25 237 0135 - 0 1.413,27 33223 - 2
+3.522,25
+
+--------------------------------------------------------------------------------
 """
 
 # Extrair os blocos
@@ -78,10 +91,18 @@ for bloco in blocos:
         if numero_mes:
             data_formatada = f"{numero_mes.zfill(2)}{ano}"
 
+            # Verifica se o tipo de pagamento aparece no bloco
+            tipo_pagamento = "A" if "(Adiant. de Salário)" in bloco else "M"
+
+
             # Procurar todos os códigos de funcionários no bloco
             codigos_func = re.findall(r'(\d{6})\s+-', bloco)
             nomes_func = re.findall(r'\d{6}\s+-\s+([A-Z\sÇÃÕÉÁÍÚÊÂÔ]+)\s+\d{3}\.\d{3}\.\d{3}-\d{2}', bloco)
             salarios = re.findall(r'-\s*0\s*([\d\.]+,\d{2})', bloco)
+            adiantamentos = re.findall(r'(Adiant. de Salário)', bloco)
+            folhas = re.findall(r'(Folha)', bloco)
+
+ 
 
             for cod, nome_func, salario in zip(codigos_func, nomes_func, salarios):
                 funcionario_uni.append({
@@ -89,9 +110,12 @@ for bloco in blocos:
                     "dataReferencia": data_formatada,
                     "cod_funcionario": cod,
                     "nome_funcionario": nome_func.strip(),
-                    "salario_func": salario
+                    "salario_func": salario,
+                    "tPagamento": tipo_pagamento
+
                 })
 
 # Imprimir resultado
 for f in funcionario_uni:
-    print(f"{f['cod_condominio']}{f['dataReferencia']}{f['cod_funcionario']}{f['nome_funcionario']}{f['salario_func']}")
+
+    print(f"{f['cod_condominio']}{f['dataReferencia']}{f['cod_funcionario']}{f['nome_funcionario']}{f['salario_func']}{f['tPagamento']}")

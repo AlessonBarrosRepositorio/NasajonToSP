@@ -1,7 +1,7 @@
 import re
 
 # Texto de exemplo (você pode substituir por leitura de arquivo)
-with open('resultado.txt', 'r', encoding='utf-8') as file:
+with open('resultado2.txt', 'r', encoding='utf-8') as file:
     texto = file.read()
 
 # Expressão regular para capturar os blocos que começam com "Persona"

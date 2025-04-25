@@ -14,4 +14,4 @@ def pdf_para_txt(pdf_path, txt_path):
     print(f"Texto extraído e salvo em: {txt_path}")
 
 # Exemplo de uso
-pdf_para_txt('./exemplos/03 2025_Adiantamento_Relação de líquidos.PDF', 'resultado.txt')
+pdf_para_txt('./exemplos/FOLHA_Listagem de Relação de Salários líquidos por tipos de Recebimento.PDF', 'resultado2.txt')
