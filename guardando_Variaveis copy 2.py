@@ -26,6 +26,7 @@ Funcionário CPF Banco Agência Valor Conta
 000035 - FLAVIO SEVERINO DA SILVA 097.961.567-41 237 0135 - 0 935,43 3919 - 5
 000055 - ALEXANDRO CONCEIÇÃO DOS SANTOS 136.257.547-03 237 0135 - 0 935,43 22764 - 1
 000056 - MANOEL FERNANDES DA SILVA 082.583.197-01 237 0135 - 0 935,43 23640 - 3
+000056 - MANOEL ANDRADE DA SILVA 082.583.192-01 237 0135 - 0 1935,43 23640 - 3
 3.741,72
 
 --------------------------------------------------------------------------------
@@ -80,14 +81,17 @@ for bloco in blocos:
             # Procurar todos os códigos de funcionários no bloco
             codigos_func = re.findall(r'(\d{6})\s+-', bloco)
             nomes_func = re.findall(r'\d{6}\s+-\s+([A-Z\sÇÃÕÉÁÍÚÊÂÔ]+)\s+\d{3}\.\d{3}\.\d{3}-\d{2}', bloco)
-            for cod, nome_func in zip(codigos_func, nomes_func):
+            salarios = re.findall(r'-\s*0\s*([\d\.]+,\d{2})', bloco)
+
+            for cod, nome_func, salario in zip(codigos_func, nomes_func, salarios):
                 funcionario_uni.append({
                     "cod_condominio": cod_condominio,
                     "dataReferencia": data_formatada,
                     "cod_funcionario": cod,
-                    "nome_funcionario": nome_func.strip()
+                    "nome_funcionario": nome_func.strip(),
+                    "salario_func": salario
                 })
 
 # Imprimir resultado
 for f in funcionario_uni:
-    print(f"{f['cod_condominio']}{f['dataReferencia']}{f['cod_funcionario']}{f['nome_funcionario']}")
+    print(f"{f['cod_condominio']}{f['dataReferencia']}{f['cod_funcionario']}{f['nome_funcionario']}{f['salario_func']}")
