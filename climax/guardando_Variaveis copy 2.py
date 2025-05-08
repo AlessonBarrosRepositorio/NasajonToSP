@@ -76,7 +76,7 @@ Funcionário CPF Banco Agência Valor Conta
 blocos = re.findall(r'(Persona Sql .*?)(?:\n\d{1,3}(?:\.\d{3})*,\d{2})', texto, re.DOTALL)
 
 funcionario_uni = []
-
+diaPagamento = input('Informe o dia de pagemnto')
 for bloco in blocos:
     # Extrair código do condomínio
     match_cond = re.search(r'Empresa\s*:\s*(\d{4})', bloco)
@@ -107,6 +107,7 @@ for bloco in blocos:
             for cod, nome_func, salario in zip(codigos_func, nomes_func, salarios):
                 funcionario_uni.append({
                     "cod_condominio": cod_condominio,
+                    "diaPagamento":diaPagamento,
                     "dataReferencia": data_formatada,
                     "cod_funcionario": cod,
                     "nome_funcionario": nome_func.strip(),
@@ -115,11 +116,35 @@ for bloco in blocos:
 
                 })
 
+
+
 # Imprimir resultado
 for f in funcionario_uni:
 
-    print(f"{f['cod_condominio']}{f['dataReferencia']}{f['cod_funcionario']}{f['nome_funcionario']}{f['salario_func']}{f['tPagamento']}")
+    print(f"{f['cod_condominio']}{f['diaPagamento']}{f['dataReferencia']}{f['cod_funcionario']}{f['nome_funcionario']}{f['salario_func']}{f['tPagamento']}")
 
-def exportar_funcinonarios_txt(funcionarios, caminho):
+def exportar_funcionarios_txt(funcionarios, caminho):
     try:
-        with open(caminho, 'w', encoding='utf-8') as 
+        with open(caminho, 'w', encoding='utf-8') as f:
+            for funcionario in funcionarios:
+                salario_num = funcionario['salario_func'].replace('.', '').replace(',', '')
+                salario_formatado = salario_num.zfill(12)
+                linha = (
+                    funcionario['cod_condominio'] +
+                    funcionario['diaPagamento'] +
+                    funcionario['dataReferencia'] +
+                    funcionario['cod_funcionario'] +
+                    funcionario['nome_funcionario'].ljust(40) +
+                    salario_formatado +
+                    funcionario['tPagamento']
+                )
+                f.write(linha + '\n')
+        print(f'Funcionários exportados com sucesso para: {caminho}')
+    except Exception as e:
+        print(f'Erro ao exportar: {e}')
+
+# Definindo o nome do arquivo de saída
+caminho = 'tabela.txt'
+
+# Chamando a função
+exportar_funcionarios_txt(funcionario_uni, caminho)
