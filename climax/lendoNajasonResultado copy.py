@@ -31,3 +31,5 @@ caminho_arquivo = input("Digite o caminho e nome do arquivo para salvar (ex: C:/
 
 # Exporta para o caminho informado
 exportar_blocos_para_txt(blocos_persona, caminho_arquivo)
+
+#C:/Users/indik/OneDrive/Documentos/NasajonPSuperLogica/total
